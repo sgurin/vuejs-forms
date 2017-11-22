@@ -17,21 +17,31 @@
           <form @submit.prevent="addInfo" class="col-md-6 offset-md-3">
             <div class="form-group">
               <label for="first-name">First name</label>
-              <input class="form-control" type="text" placeholder="First Name" name="first-name" v-model="userInfo.firstName">
+              <input class="form-control" type="text" placeholder="First Name" name="first-name" v-validate data-vv-rules="required|min:4"
+                data-vv-as="First Name" :class="{'input': true, 'is-danger': errors.has('first-name') }" v-model="userInfo.firstName">
+              <span v-show="errors.has('first-name')" class="help is-danger">{{ errors.first('first-name') }}</span>
             </div>
             <div class="form-group">
               <label for="last-name">Last name</label>
-              <input class="form-control" type="text" placeholder="Last Name" name="last-name" v-model="userInfo.lastName">
+              <input class="form-control" type="text" placeholder="Last Name" name="last-name" v-validate data-vv-rules="required|min:4"
+                data-vv-as="Last Name" :class="{'input': true, 'is-danger': errors.has('last-name') }" v-model="userInfo.lastName">
+              <span v-show="errors.has('last-name')" class="help is-danger">{{ errors.first('last-name') }}</span>
             </div>
             <label for="user-email">Email</label>
-            <input class="form-control" type="text" placeholder="Last Name" name="email" v-model="userInfo.userEmail">
+            <input class="form-control" type="text" placeholder="Last Name" name="email" v-validate data-vv-rules="required|email" data-vv-as="Email"
+              :class="{'input': true, 'is-danger': errors.has('email') }" v-model="userInfo.userEmail">
+            <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
             <div class="form-group">
               <label for="user-age">Age</label>
-              <input class="form-control" type="text" placeholder="Age" name="age" v-model="userInfo.userAge">
+              <input class="form-control" type="text" placeholder="Age" name="age" v-validate data-vv-rules="numeric|min_value:1|max_value:120"
+                data-vv-as="Age" :class="{'input': true, 'is-danger': errors.has('age') }" v-model="userInfo.userAge">
+              <span v-show="errors.has('age')" class="help is-danger">{{ errors.first('age') }}</span>
             </div>
             <div class="form-group">
               <label for="user-skype">Skype</label>
-              <input class="form-control" type="text" placeholder="Skype" name="skype" v-model="userInfo.userSkype">
+              <input class="form-control" type="text" placeholder="Skype" name="skype" v-validate data-vv-rules="min:4|max:10" data-vv-as="Skype"
+                :class="{'input': true, 'is-danger': errors.has('skype') }" v-model="userInfo.userSkype">
+              <span v-show="errors.has('skype')" class="help is-danger">{{ errors.first('skype') }}</span>
             </div>
             <div class="row">
               <button class="btn btn-default">Add Info</button>
@@ -41,10 +51,10 @@
         <div>
           <div v-show="users.length" class="row">
             <div class="col-md-2">Firs tName</div>
-              <div class="col-md-2">Last Name</div>
-              <div class="col-md-2">Email</div>
-              <div class="col-md-2">Age</div>
-              <div class="col-md-2">Skype</div>
+            <div class="col-md-2">Last Name</div>
+            <div class="col-md-2">Email</div>
+            <div class="col-md-2">Age</div>
+            <div class="col-md-2">Skype</div>
           </div>
           <div class="row" v-for="(user, index) in users">
             <div class="col-md-2">{{user.firstName}}</div>

@@ -65,6 +65,7 @@
     "bootstrap-sass": "^3.3.7",
     "include-media": "~1.4.9",
     "jquery": "~2.2.4",
+    "vee-validate": "^2.0.0-rc.23",
     "vue": "^2.5.8"
   }
 }
