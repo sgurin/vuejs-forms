@@ -27,26 +27,24 @@ export default () => {
     },
     methods: {
       addInfo() {
-
-        this.$validator.validateAll().then((result) => {
-          // Check validation stat
-          if (result) {
-            this.users.push(Object.assign({}, this.userInfo));
-            // Reset from model
-            Object.keys(this.userInfo).forEach(key => {
-              this.userInfo[key] = '';
-            });
-            // Clear validation errors after model resetting
-            Vue.nextTick(() => {
-              this.$validator.clean();
-            });
-          }
+        this.users.push(Object.assign({}, this.userInfo));
+        this.saveUsersToLocalStorage();
+        Object.keys(this.userInfo).forEach(key => {
+          this.userInfo[key] = '';
         });
-
+      },
+      saveUsersToLocalStorage() {
+        localStorage.setItem('users', JSON.stringify(this.users));
+      },
+      loadUsersFromLocalStorage() {
+        const users = JSON.parse(localStorage.getItem("users"));
+        if (users) {
+          this.users = users;
+        }
       }
     },
     created() {
-      console.log('Vue app is loaded');
+      this.loadUsersFromLocalStorage();
     }
   });
 };
