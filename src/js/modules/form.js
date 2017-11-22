@@ -27,10 +27,20 @@ export default () => {
     },
     methods: {
       addInfo() {
-        this.users.push(Object.assign({}, this.userInfo));
-        this.saveUsersToLocalStorage();
-        Object.keys(this.userInfo).forEach(key => {
-          this.userInfo[key] = '';
+        this.$validator.validateAll().then((result) => {
+          // Check validation stat
+          if (result) {
+            this.users.push(Object.assign({}, this.userInfo));
+            this.saveUsersToLocalStorage();
+            // Reset from model          
+            Object.keys(this.userInfo).forEach(key => {
+              this.userInfo[key] = '';
+            });
+            // Clear validation errors after model resetting
+            Vue.nextTick(() => {
+              this.$validator.clean();
+            });
+          }
         });
       },
       saveUsersToLocalStorage() {
